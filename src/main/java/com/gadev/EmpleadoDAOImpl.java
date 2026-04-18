@@ -53,7 +53,32 @@ public class EmpleadoDAOImpl implements Repositorio<Empleado>{
 
     @Override
     public void guardar(Empleado empleado) {
+        String sql;
+        // Si el empleado ya tiene un ID, significa que existe, entonces hacemos un UPDATE.
+        // Si su ID es null (o 0), es un empleado nuevo, hacemos INSERT.
+        if(empleado.getId() != null && empleado.getId() > 0){
+            sql = "UPDATE empleados SET nombre=?, puesto=?, salario=?, fecha_contratacion=? WHERE id=?";
+        } else {
+            sql = "INSERT INTO empleados(nombre, puesto, salario, fecha_contratacion) VALUES (?,?,?,?)";
+        }
 
+        try (Connection conn = getConnection();
+            PreparedStatement stmt =conn.prepareStatement(sql)){
+            // Rellenar los '?' en orden
+            stmt.setString(1, empleado.getNombre());
+            stmt.setString(2,empleado.getPuesto());
+            stmt.setDouble(3, empleado.getSalario());
+            // Convertir el LocalDate de Java al Date de SQL
+            stmt.setDate(4, Date.valueOf(empleado.getFechaContratacion()));
+
+            if (empleado.getId() != null && empleado.getId() > 0){
+                stmt.setInt(5, empleado.getId());
+            }
+
+            stmt.executeUpdate(); // Ejecuta la accion (INSERT, UPDATE o DELETE)
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
