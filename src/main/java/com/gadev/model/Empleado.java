@@ -3,16 +3,16 @@ package com.gadev.model;
 import java.time.LocalDate;
 
 public class Empleado {
-    private int id;
+    private Integer id;
     private String nombre;
     private String puesto;
-    private double salario;
+    private Double salario;
     private LocalDate fechaContratacion;
 
     public Empleado() {
     }
 
-    public Empleado(int id, String nombre, String puesto, double salario, LocalDate fechaContratacion) {
+    public Empleado(Integer id, String nombre, String puesto, Double salario, LocalDate fechaContratacion) {
         this.id = id;
         this.nombre = nombre;
         this.puesto = puesto;
@@ -20,14 +20,14 @@ public class Empleado {
         this.fechaContratacion = fechaContratacion;
     }
 
-    public Empleado(String nombre, String puesto, double salario, LocalDate fechaContratacion) {
+    public Empleado(String nombre, String puesto, Double salario, LocalDate fechaContratacion) {
         this.nombre = nombre;
         this.puesto = puesto;
         this.salario = salario;
         this.fechaContratacion = fechaContratacion;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -51,7 +51,7 @@ public class Empleado {
         this.puesto = puesto;
     }
 
-    public double getSalario() {
+    public Double getSalario() {
         return salario;
     }
 
