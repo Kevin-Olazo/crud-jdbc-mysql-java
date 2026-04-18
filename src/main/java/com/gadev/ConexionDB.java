@@ -24,7 +24,7 @@ public class ConexionDB {
         }
     }
 
-    private ConexionDB(){}; // Constructor privado para evitar instancias
+    private ConexionDB(){} // Constructor privado para evitar instancias
 
     // 2. Entrega la conexion (Reutilizando la misma siempre que sea posible)
     public static Connection getInstance() throws SQLException {
@@ -34,14 +34,8 @@ public class ConexionDB {
             String user = properties.getProperty("db.user");
             String password = properties.getProperty("db.password");
 
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException("¡Error! El driver de MySQL no está en el Classpath.", e);
-            }
+             conexion = DriverManager.getConnection(url, user, password);
 
-            conexion = DriverManager.getConnection(url, user, password);
-            System.out.println("Conexion a la base de datos establecida con exito!");
         }
         return conexion;
     }
