@@ -2,10 +2,7 @@ package com.gadev;
 
 import com.gadev.model.Empleado;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +32,23 @@ public class EmpleadoDAOImpl implements Repositorio<Empleado>{
 
     @Override
     public Empleado porId(int id) {
-        return null;
+        Empleado empleado = null;
+        String sql = "SELECT * FROM empleados WHERE ID = ?"; // El '?' es un parametro seguro
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id); // Reemplaza el primer '?' con el ID
+
+            try (ResultSet rs = stmt.executeQuery()){
+                if (rs.next()){
+                    empleado = mapearEmpleado(rs);
+                }
+            }
+
+        }  catch (SQLException e){
+            e.printStackTrace();
+        }
+        return empleado;
     }
 
     @Override
