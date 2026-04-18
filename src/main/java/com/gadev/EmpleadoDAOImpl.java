@@ -83,7 +83,14 @@ public class EmpleadoDAOImpl implements Repositorio<Empleado>{
 
     @Override
     public void eliminar(int id) {
-
+        String sql = "DELETE FROM empleados WHERE id = ?";
+        try (Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Metodo auxiliar
